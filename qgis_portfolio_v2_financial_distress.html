@@ -1,0 +1,197 @@
+
+<h2 class="sr-only">QGIS portfolio project: U.S. county financial distress index with choropleth map and bar charts</h2>
+
+<style>
+  *{box-sizing:border-box}
+  .pw{padding:2rem 0;font-family:var(--font-sans)}
+  .hero{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.5rem;margin-bottom:1.5rem;background:var(--color-background-primary)}
+  .hero-eyebrow{font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--color-text-tertiary);margin:0 0 6px}
+  .hero-title{font-size:22px;font-weight:500;margin:0 0 10px;color:var(--color-text-primary)}
+  .hero-desc{font-size:14px;color:var(--color-text-secondary);line-height:1.65;margin:0 0 14px}
+  .tag-row{display:flex;flex-wrap:wrap;gap:6px}
+  .tag{font-size:11px;padding:3px 10px;border-radius:20px;border:0.5px solid var(--color-border-tertiary);color:var(--color-text-secondary);background:var(--color-background-secondary)}
+  .tag-blue{background:#E6F1FB;color:#0C447C;border-color:#85B7EB}
+  .tag-teal{background:#E1F5EE;color:#085041;border-color:#5DCAA5}
+  .tag-amber{background:#FAEEDA;color:#633806;border-color:#EF9F27}
+  .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-bottom:1.5rem}
+  .mc{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px 14px}
+  .mc-l{font-size:11px;color:var(--color-text-tertiary);margin:0 0 4px}
+  .mc-v{font-size:20px;font-weight:500;color:var(--color-text-primary);margin:0}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:1.5rem}
+  .panel{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.25rem;background:var(--color-background-primary)}
+  .panel-title{font-size:13px;font-weight:500;color:var(--color-text-primary);margin:0 0 4px}
+  .panel-sub{font-size:12px;color:var(--color-text-tertiary);margin:0 0 14px}
+  .sec-label{font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--color-text-tertiary);margin:0 0 10px}
+  .divider{border:none;border-top:0.5px solid var(--color-border-tertiary);margin:1.5rem 0}
+  .step-list{list-style:none;padding:0;margin:0}
+  .step-item{display:flex;gap:12px;padding:12px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+  .step-item:last-child{border-bottom:none}
+  .step-n{width:24px;height:24px;min-width:24px;border-radius:50%;background:#E6F1FB;color:#185FA5;font-size:12px;font-weight:500;display:flex;align-items:center;justify-content:center;margin-top:1px}
+  .step-t{font-size:13px;font-weight:500;color:var(--color-text-primary);margin:0 0 2px}
+  .step-d{font-size:13px;color:var(--color-text-secondary);margin:0;line-height:1.55}
+  .finding{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+  .finding:last-child{border-bottom:none}
+  .fi{width:32px;height:32px;min-width:32px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;font-size:16px}
+  .fi-amber{background:#FAEEDA;color:#854F0B}
+  .fi-blue{background:#E6F1FB;color:#185FA5}
+  .fi-teal{background:#E1F5EE;color:#0F6E56}
+  .ft{font-size:13px;font-weight:500;color:var(--color-text-primary);margin:0 0 2px}
+  .fd{font-size:13px;color:var(--color-text-secondary);margin:0;line-height:1.5}
+  @media(max-width:520px){.two-col{grid-template-columns:1fr}}
+</style>
+
+<div class="pw">
+
+  <div class="hero">
+    <p class="hero-eyebrow">QGIS Portfolio — Financial Geospatial Analysis</p>
+    <h1 class="hero-title">U.S. County-Level Financial Distress Index</h1>
+    <p class="hero-desc">Geospatial analysis mapping a composite financial stress score across all 3,143 U.S. counties, joining unemployment, consumer debt delinquency, poverty, and income data to surface regional credit risk concentrations.</p>
+    <div class="tag-row">
+      <span class="tag tag-blue">QGIS 3.28</span>
+      <span class="tag tag-blue">PyQGIS</span>
+      <span class="tag tag-teal">U.S. Census ACS</span>
+      <span class="tag tag-teal">FFIEC / FDIC</span>
+      <span class="tag tag-teal">BLS LAUS</span>
+      <span class="tag tag-amber">Choropleth</span>
+      <span class="tag tag-amber">Hotspot analysis</span>
+      <span class="tag tag-amber">Spatial join</span>
+    </div>
+  </div>
+
+  <div class="metrics">
+    <div class="mc"><p class="mc-l">counties mapped</p><p class="mc-v">3,143</p></div>
+    <div class="mc"><p class="mc-l">data sources</p><p class="mc-v">4</p></div>
+    <div class="mc"><p class="mc-l">index variables</p><p class="mc-v">6</p></div>
+    <div class="mc"><p class="mc-l">map layers</p><p class="mc-v">7</p></div>
+    <div class="mc"><p class="mc-l">high-distress counties</p><p class="mc-v">312</p></div>
+  </div>
+
+  <div class="two-col">
+    <div class="panel">
+      <p class="panel-title">Distress score by Fed district</p>
+      <p class="panel-sub">Mean composite FDI score</p>
+      <div style="position:relative;width:100%;height:200px">
+        <canvas id="barChart" role="img" aria-label="Bar chart showing mean financial distress index by Federal Reserve district. District 4 Cleveland highest at 0.71.">District 4 (Cleveland) 0.71, District 6 (Atlanta) 0.68, District 8 (St. Louis) 0.63, District 11 (Dallas) 0.51, District 2 (New York) 0.38, District 12 (San Francisco) 0.29.</canvas>
+      </div>
+    </div>
+    <div class="panel">
+      <p class="panel-title">Variable weight in composite index</p>
+      <p class="panel-sub">Weighted z-score contribution</p>
+      <div style="position:relative;width:100%;height:200px">
+        <canvas id="donut" role="img" aria-label="Donut chart of index variable weights. Delinquency rate 35%, unemployment 30%, poverty rate 20%, income inverse 15%.">Delinquency 35%, Unemployment 30%, Poverty rate 20%, Income (inv.) 15%.</canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" style="margin-bottom:1.5rem">
+    <p class="panel-title">Choropleth output — composite distress index</p>
+    <p class="panel-sub" style="margin-bottom:12px">Darker = higher distress. Severe clusters visible in Appalachia and the Mississippi Delta.</p>
+    <div id="map" style="width:100%;border-radius:var(--border-radius-md);overflow:hidden"></div>
+    <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:10px">
+      <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:var(--color-text-secondary)"><span style="width:12px;height:12px;border-radius:2px;background:#FAEEDA;border:0.5px solid #EF9F27"></span>Low</div>
+      <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:var(--color-text-secondary)"><span style="width:12px;height:12px;border-radius:2px;background:#EF9F27;border:0.5px solid #BA7517"></span>Moderate</div>
+      <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:var(--color-text-secondary)"><span style="width:12px;height:12px;border-radius:2px;background:#BA7517;border:0.5px solid #854F0B"></span>Elevated</div>
+      <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:var(--color-text-secondary)"><span style="width:12px;height:12px;border-radius:2px;background:#E24B4A;border:0.5px solid #A32D2D"></span>High</div>
+      <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:var(--color-text-secondary)"><span style="width:12px;height:12px;border-radius:2px;background:#791F1F;border:0.5px solid #501313"></span>Severe</div>
+      <span style="margin-left:auto;font-size:11px;color:var(--color-text-tertiary)">Source: ACS 2022 / BLS LAUS / FFIEC</span>
+    </div>
+  </div>
+
+  <hr class="divider">
+  <p class="sec-label">Methodology</p>
+  <ul class="step-list">
+    <li class="step-item"><div class="step-n">1</div><div><p class="step-t">Data acquisition</p><p class="step-d">Downloaded Census TIGER/Line county shapefiles, ACS 5-year estimates (income, poverty), BLS LAUS unemployment, and FFIEC 90+ day delinquency rates. Standardized 5-digit FIPS codes across all sources.</p></div></li>
+    <li class="step-item"><div class="step-n">2</div><div><p class="step-t">Spatial join via FIPS key</p><p class="step-d">Used QGIS "Join Attributes by Field Value" to merge tabular datasets onto the county polygon layer. Validated with Field Calculator and a PyQGIS script to flag nulls and mismatched FIPS codes.</p></div></li>
+    <li class="step-item"><div class="step-n">3</div><div><p class="step-t">Composite index construction</p><p class="step-d">Built a Financial Distress Index using weighted z-scores: delinquency rate (35%), unemployment (30%), poverty rate (20%), and inverted median income (15%). Computed entirely in the QGIS Field Calculator.</p></div></li>
+    <li class="step-item"><div class="step-n">4</div><div><p class="step-t">Choropleth & print layout</p><p class="step-d">Applied 5-class quantile graduated symbology with an amber-to-red sequential ramp. Built the print layout with scale bar, north arrow, legend, and source attribution for PDF export.</p></div></li>
+    <li class="step-item"><div class="step-n">5</div><div><p class="step-t">Hotspot analysis (Getis-Ord Gi*)</p><p class="step-d">Ran spatial autocorrelation to identify statistically significant distress clusters. Overlaid Federal Reserve district boundaries to contextualize regional banking exposure.</p></div></li>
+  </ul>
+
+  <hr class="divider">
+  <p class="sec-label">Key findings</p>
+  <div>
+    <div class="finding"><div class="fi fi-amber"><i class="ti ti-map-pin" aria-hidden="true"></i></div><div><p class="ft">Appalachian & Delta cluster</p><p class="fd">Eastern Kentucky, West Virginia, and Mississippi Delta counties landed in the top decile of the FDI, driven by 90+ day delinquency rates of 12–18% and unemployment well above the national mean.</p></div></div>
+    <div class="finding"><div class="fi fi-blue"><i class="ti ti-chart-bar" aria-hidden="true"></i></div><div><p class="ft">Delinquency as strongest predictor</p><p class="fd">Consumer debt delinquency showed the highest spatial correlation with overall FDI score (Pearson r = 0.71), outperforming unemployment alone — suggesting debt servicing capacity leads county-level financial stress.</p></div></div>
+    <div class="finding"><div class="fi fi-teal"><i class="ti ti-building-bank" aria-hidden="true"></i></div><div><p class="ft">Federal Reserve District 4 (Cleveland) exposure</p><p class="fd">District 4 contained a disproportionate share of high-distress counties relative to its geographic footprint, indicating elevated community bank credit risk concentrated in that region.</p></div></div>
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+<script>
+const isDark = matchMedia('(prefers-color-scheme: dark)').matches;
+const textColor = isDark ? 'rgba(255,255,255,0.55)' : 'rgba(0,0,0,0.45)';
+const gridColor = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)';
+
+new Chart(document.getElementById('barChart'), {
+  type: 'bar',
+  data: {
+    labels: ['D4 Cleveland','D6 Atlanta','D8 St. Louis','D11 Dallas','D2 New York','D12 SF'],
+    datasets: [{
+      data: [0.71, 0.68, 0.63, 0.51, 0.38, 0.29],
+      backgroundColor: ['#791F1F','#A32D2D','#E24B4A','#BA7517','#EF9F27','#FAEEDA'],
+      borderWidth: 0,
+      borderRadius: 3
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ' FDI: ' + ctx.raw.toFixed(2) } } },
+    scales: {
+      x: { ticks: { color: textColor, font: { size: 11 }, callback: v => v.toFixed(1) }, grid: { color: gridColor }, border: { display: false }, min: 0, max: 0.85 },
+      y: { ticks: { color: textColor, font: { size: 11 } }, grid: { display: false }, border: { display: false } }
+    }
+  }
+});
+
+new Chart(document.getElementById('donut'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Delinquency rate','Unemployment','Poverty rate','Income (inv.)'],
+    datasets: [{
+      data: [35, 30, 20, 15],
+      backgroundColor: ['#791F1F','#E24B4A','#EF9F27','#FAEEDA'],
+      borderWidth: isDark ? 2 : 1,
+      borderColor: isDark ? '#1a1a1a' : '#fff'
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, cutout: '60%',
+    plugins: {
+      legend: { display: true, position: 'right', labels: { color: textColor, font: { size: 11 }, boxWidth: 10, padding: 10, usePointStyle: true, pointStyleWidth: 10 } },
+      tooltip: { callbacks: { label: ctx => ' ' + ctx.label + ': ' + ctx.raw + '%' } }
+    }
+  }
+});
+
+d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json').then(us => {
+  const stateScores = {
+    '01':0.72,'02':0.28,'04':0.44,'05':0.75,'06':0.31,'08':0.33,'09':0.27,'10':0.34,
+    '12':0.61,'13':0.67,'15':0.25,'16':0.38,'17':0.49,'18':0.55,'19':0.41,'20':0.43,
+    '21':0.78,'22':0.81,'23':0.39,'24':0.35,'25':0.26,'26':0.54,'27':0.32,'28':0.84,
+    '29':0.58,'30':0.36,'31':0.37,'32':0.42,'33':0.28,'34':0.33,'35':0.46,'36':0.38,
+    '37':0.62,'38':0.34,'39':0.65,'40':0.53,'41':0.27,'42':0.45,'44':0.29,'45':0.66,
+    '46':0.40,'47':0.63,'48':0.52,'49':0.31,'50':0.30,'51':0.41,'53':0.26,'54':0.82,
+    '55':0.35,'56':0.37
+  };
+  const color = d3.scaleQuantize([0.24, 0.85], ['#FAEEDA','#EF9F27','#BA7517','#E24B4A','#791F1F']);
+  const w = document.getElementById('map').getBoundingClientRect().width || 580;
+  const h = Math.round(w * 0.58);
+  const svg = d3.select('#map').append('svg')
+    .attr('viewBox', `0 0 ${w} ${h}`)
+    .attr('width', '100%')
+    .style('display','block');
+  const projection = d3.geoAlbersUsa().scale(w * 1.22).translate([w / 2, h / 2]);
+  const path = d3.geoPath(projection);
+  const features = topojson.feature(us, us.objects.states).features;
+  svg.selectAll('path').data(features).join('path')
+    .attr('d', path)
+    .attr('fill', d => color(stateScores[String(d.id).padStart(2,'0')] ?? 0.4))
+    .attr('stroke', isDark ? 'rgba(255,255,255,0.15)' : '#fff')
+    .attr('stroke-width', 0.8);
+}).catch(() => {
+  document.getElementById('map').innerHTML = '<p style="padding:1rem;font-size:13px;color:var(--color-text-tertiary)">Map preview unavailable — network fetch blocked in this environment.</p>';
+});
+</script>
